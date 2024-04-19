@@ -13,7 +13,7 @@ async function loadConfig(projectPath: string, configFile?: string, verbose = fa
   const supportedExtensions = ['js', 'mjs'];
 
   if (configFile) {
-    const relativeConfigFile = join(projectPath, configFile);
+    const relativeConfigFile = join(process.cwd(), projectPath, configFile);
     if (verbose) console.info(colors.cyan(`Loading config at: `) + relativeConfigFile);
 
     if (existsSync(relativeConfigFile)) {
@@ -24,11 +24,11 @@ async function loadConfig(projectPath: string, configFile?: string, verbose = fa
   }
 
   for (const extension of supportedExtensions) {
-    const configPath = join(projectPath, `i18next-parser.config.${extension}`);
+    const configPath = join(process.cwd(), projectPath, `i18next-parser.config.${extension}`);
     if (verbose) console.info(colors.cyan(`Looking for: ${configPath}`));
 
     if (existsSync(configPath)) {
-      if (verbose) console.info(colors.cyan(` ^ Config found`));
+      if (verbose) console.info(colors.green(`i18next parser config found!`));
       return esConfigLoader(configPath);
     }
   }
@@ -51,12 +51,20 @@ export async function run({ projectPath, configPath, prettierConfig, resourcesPa
     process.exit(1);
   }
 
-  console.log({ projectPath, configPath, prettierConfig, resourcesPath, locale, verbose });
+  if (verbose) {
+    console.info(colors.cyan('Parsed arguments'));
+    console.info(colors.dim(JSON.stringify({ projectPath, configPath, prettierConfig, resourcesPath, locale, verbose }, null, 2)));
+    console.info(' ');
+  }
 
   try {
     const config = await loadConfig(projectPath, configPath, verbose);
 
+    if (verbose) console.info(' ');
+
     await parseTranslations(projectPath, config, verbose);
+
+    if (verbose) console.info(' ');
 
     if (resourcesPath) await generateNamespaces(join(projectPath, resourcesPath), config, join(projectPath, prettierConfig), locale, verbose);
   } catch (error: unknown) {

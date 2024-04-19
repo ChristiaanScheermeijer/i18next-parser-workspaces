@@ -6,7 +6,7 @@ program
   .name('i18next-workspaces')
   .description('Run i18next-parser over all source files in your TypeScript project')
   .argument('<projectPath>', 'the project directory that contains a tsconfig.json')
-  .option('--config <file>', 'path to your i18next-parser config', 'i18next-parser.config.js')
+  .option('--config <file>', 'path to your i18next-parser config (default: i18next-parser.config.[js,mjs])')
   .option('--resources <file>', 'generate a resources file that exports all namespaces')
   .option('--locale <locale>', 'the locale to look for namespaces (default: first locale in i18next parser config)')
   .option('--prettier <config>', 'the path to the prettier config', '.prettierrc')

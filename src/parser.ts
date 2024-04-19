@@ -9,13 +9,19 @@ import colors from 'colors';
 
 export async function parseTranslations(projectPath: string, config: UserConfig, verbose = false) {
   const cwd = process.cwd();
-  const output = execSync(`tsc --listFilesOnly --project ${join(projectPath, 'tsconfig.json')}`);
+  const command = `tsc --listFilesOnly --project ${join(projectPath, 'tsconfig.json')}`;
+
+  if (verbose) console.info(colors.cyan(`Running: `) + command);
+
+  const output = execSync(command);
   const sources = output
     .toString('utf-8')
     .split('\n')
     .filter((file) => !file.includes('node_modules') && file !== '' && !file.endsWith('.d.ts'));
 
-  if (verbose) console.info(colors.cyan(`  [tsc] found ${sources.length} source files`));
+  if (verbose) console.info(colors.green(`TypeScript found ${sources.length} source files`));
+  console.info('');
+
   // should the cwd be passed via cli args?
   // This is not the process cwd, but used for scanning files with absolute paths outside the actual cwd
   //  option 1: determine the cwd (current)
@@ -33,6 +39,9 @@ export async function parseTranslations(projectPath: string, config: UserConfig,
 
   let count = 0;
 
+
+  if (verbose) console.info(colors.cyan('Parsing source files for translations'));
+
   return new Promise<void>((resolve, reject) => {
     vfs
       .src(sources, { cwd: sourceCwd })
@@ -46,14 +55,14 @@ export async function parseTranslations(projectPath: string, config: UserConfig,
             console.info(colors.red('  [error] ') + message);
             reject();
           })
-          .on('warning', function (message: unknown) {
-            if (verbose) console.info(colors.blue('  [warning] ') + message);
+          .on('warning', function (message: string) {
+            if (verbose) console.info(colors.blue('  [warning] ') + colors.dim(message));
           })
           .on('finish', function () {
             console.info(colors.green('Translations parsed from ' + count + ' source files'));
             resolve();
           }),
       )
-      .pipe(vfs.dest(cwd));
+      .pipe(vfs.dest(process.cwd()));
   });
 }
