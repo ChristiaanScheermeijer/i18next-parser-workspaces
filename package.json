@@ -1,0 +1,37 @@
+{
+  "name": "i18next-parser-workspaces",
+  "description": "Run i18next-parser over all source files in your TypeScript project",
+  "author": "Christiaan Scheermeijer",
+  "repository": "https://github.com/ChristiaanScheermeijer/i18next-parser-workspaces",
+  "version": "0.0.1",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "i18next-workspaces": "./bin/cli.js"
+  },
+  "scripts": {
+    "prepublish": "rimraf ./lib && tsc",
+    "format": "prettier --write src/*.ts bin/cli.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/vinyl-fs": "^3.0.5",
+    "i18next-parser": "^8.13.0",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^12.0.0",
+    "vinyl-fs": "^4.0.0"
+  },
+  "peerDependencies": {
+    "i18next-parser": "^8.0.0",
+    "typescript": "^4.0.0"
+  },
+  "optionalDependencies": {
+    "prettier": "^3.2.5"
+  }
+}
