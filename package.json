@@ -3,7 +3,7 @@
   "description": "Run i18next-parser over all source files in your TypeScript project",
   "author": "Christiaan Scheermeijer",
   "repository": "https://github.com/ChristiaanScheermeijer/i18next-parser-workspaces",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
