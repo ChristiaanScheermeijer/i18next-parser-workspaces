@@ -9,11 +9,11 @@ async function esConfigLoader(filepath: string): Promise<UserConfig> {
 }
 
 export async function loadConfig(projectPath: string, configFile?: string, verbose = false) {
-  const supportedExtensions = ['js', 'mjs'];
+  const supportedExtensions = ['js', 'mjs', 'cjs'];
 
   if (configFile) {
     const relativeConfigFile = join(process.cwd(), projectPath, configFile);
-    if (verbose) console.info(colors.cyan(`Loading config at: `) + relativeConfigFile);
+    if (verbose) console.info(colors.cyan(`Loading config at: `) + colors.dim(relativeConfigFile));
 
     if (existsSync(relativeConfigFile)) {
       return esConfigLoader(relativeConfigFile);
