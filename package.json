@@ -12,7 +12,8 @@
   },
   "scripts": {
     "prepublish": "rimraf ./lib && tsc",
-    "format": "prettier --write src/*.ts bin/cli.js"
+    "format": "prettier --write src/**/*.ts bin/cli.js",
+    "lint": "tsc --noEmit && prettier --check src/**/*.ts bin/cli.js"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

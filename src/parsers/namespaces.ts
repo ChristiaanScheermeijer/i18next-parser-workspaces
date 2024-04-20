@@ -16,7 +16,7 @@ async function formatFile(fileContents: string, outputPath: string, configPath: 
   return fileContents;
 }
 
-export async function generateNamespaces(resourcesPath: string, config: UserConfig, prettierConfigPath: string, locale?: string, verbose = false) {
+export async function generateNamespaces(outputPath: string, config: UserConfig, prettierConfigPath: string, locale?: string, verbose = false) {
   const defaultLocale = locale || config.locales?.[0];
   const localesPath = config.output?.replace('/$LOCALE', '').replace('/$NAMESPACE.json', '') || 'locales';
 
@@ -34,9 +34,9 @@ export async function generateNamespaces(resourcesPath: string, config: UserConf
 
 export const NAMESPACES = ${JSON.stringify(namespaces)};`;
 
-  const formatted = await formatFile(configContents, resourcesPath, prettierConfigPath);
+  const formatted = await formatFile(configContents, outputPath, prettierConfigPath);
 
-  writeFileSync(resourcesPath, formatted, { encoding: 'utf-8' });
+  writeFileSync(outputPath, formatted, { encoding: 'utf-8' });
 
-  console.info(colors.green(`Generated i18next namespaces at: `) + resourcesPath);
+  console.info(colors.green(`Generated i18next namespaces at: `) + outputPath);
 }

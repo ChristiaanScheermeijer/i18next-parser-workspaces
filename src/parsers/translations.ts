@@ -19,8 +19,9 @@ export async function parseTranslations(projectPath: string, config: UserConfig,
     .split('\n')
     .filter((file) => !file.includes('node_modules') && file !== '' && !file.endsWith('.d.ts'));
 
-  if (verbose) console.info(colors.green(`TypeScript found ${sources.length} source files`));
-  console.info('');
+  if (verbose) {
+    console.info(colors.green(`TypeScript found ${sources.length} source files`));
+  }
 
   // should the cwd be passed via cli args?
   // This is not the process cwd, but used for scanning files with absolute paths outside the actual cwd
@@ -34,11 +35,9 @@ export async function parseTranslations(projectPath: string, config: UserConfig,
 
   if (relative(cwd, sourceCwd).length > 0) {
     console.info(colors.yellow('IMPORTANT: ') + colors.dim(`Using a different cwd for vinyl-fs: ` + sourceCwd));
-    console.info('');
   }
 
   let count = 0;
-
 
   if (verbose) console.info(colors.cyan('Parsing source files for translations'));
 
@@ -59,6 +58,7 @@ export async function parseTranslations(projectPath: string, config: UserConfig,
             if (verbose) console.info(colors.blue('  [warning] ') + colors.dim(message));
           })
           .on('finish', function () {
+            console.info('');
             console.info(colors.green('Translations parsed from ' + count + ' source files'));
             resolve();
           }),
