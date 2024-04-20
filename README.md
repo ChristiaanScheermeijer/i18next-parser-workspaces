@@ -74,6 +74,22 @@ $ i18next-workspaces namespaces --verbose ./packages/frontend ./src/i18n/resourc
 - `--verbose`: enable additional logging for debugging purposes.
 - `--h, --help`: display help for command
 
+### Fill missing
+
+The **fill-missing** command fills missing (empty) translations using values from the source project.
+
+```bash
+$ i18next-workspaces fill-missing [options] <projectA> <projectB>
+$ i18next-workspaces fill-missing --verbose ./packages/frontend ./packages/app
+```
+
+#### Options
+
+- `--configA <file>`: path to your i18next-parser config for projectA (default: i18next-parser.config.[js,mjs])
+- `--configB <file>`: path to your i18next-parser config for projectB (default: i18next-parser.config.[js,mjs])
+- `--verbose`: enable additional logging for debugging purposes.
+- `--h, --help`: display help for command
+
 ## Examples
 
 This command will parse all source files and generate the translation files.

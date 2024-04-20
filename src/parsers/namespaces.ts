@@ -2,6 +2,7 @@ import { readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { UserConfig } from 'i18next-parser';
 import colors from 'colors';
+import { resolveLocalesPath } from '../utils/resolve-locales-path.js';
 
 async function formatFile(fileContents: string, outputPath: string, configPath: string) {
   try {
@@ -18,7 +19,7 @@ async function formatFile(fileContents: string, outputPath: string, configPath: 
 
 export async function generateNamespaces(outputPath: string, config: UserConfig, prettierConfigPath: string, locale?: string, verbose = false) {
   const defaultLocale = locale || config.locales?.[0];
-  const localesPath = config.output?.replace('/$LOCALE', '').replace('/$NAMESPACE.json', '') || 'locales';
+  const localesPath = resolveLocalesPath(config);
 
   if (!defaultLocale)
     throw new Error("Couldn't determine a locale, please configure the locales in the i18next-parser config or pass it with --locale <locale>");

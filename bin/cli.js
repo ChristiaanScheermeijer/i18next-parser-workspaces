@@ -2,6 +2,7 @@
 import { program } from 'commander';
 import { parse } from '../lib/commands/parse.js';
 import { namespaces } from '../lib/commands/namespaces.js';
+import { fillMissing } from '../lib/commands/fill-missing.js';
 
 program.name('i18next-workspaces').description('i18next utilities for workspaces');
 
@@ -23,5 +24,15 @@ program
   .option('--prettier <config>', 'the path to the prettier config', '.prettierrc')
   .option('--verbose', 'enable additional logging', false)
   .action((projectPath, outputFile, options) => namespaces(projectPath, outputFile, options));
+
+program
+  .command('fill-missing')
+  .description('fill missing translations in projectB using projectA as the source')
+  .argument('<projectA>', 'the source project directory')
+  .argument('<projectB>', 'the target project directory')
+  .option('--configA <file>', 'path to your i18next-parser config for projectA (default: i18next-parser.config.[js,mjs])')
+  .option('--configB <file>', 'path to your i18next-parser config for projectB (default: i18next-parser.config.[js,mjs])')
+  .option('--verbose', 'enable additional logging', false)
+  .action((projectA, projectB, options) => fillMissing(projectA, projectB, options));
 
 program.parse();
