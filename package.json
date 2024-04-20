@@ -11,7 +11,8 @@
     "i18next-workspaces": "./bin/cli.js"
   },
   "scripts": {
-    "prepublish": "rimraf ./lib && tsc",
+    "build": "rimraf ./lib && tsc",
+    "prepublishOnly": "yarn build",
     "format": "prettier --write src/**/*.ts bin/cli.js",
     "lint": "tsc --noEmit && prettier --check src/**/*.ts bin/cli.js"
   },
