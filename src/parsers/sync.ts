@@ -37,12 +37,12 @@ function iterateTranslations(localesPath: string, callback: (language: string, n
 
   for (const languageIndex in languages) {
     const languagePath = join(localesPath, languages[languageIndex]);
-    const files = readdirSync(languagePath, { withFileTypes: true })
-      .filter((dirent) => dirent.isFile() && !/_old\.json/.test(dirent.name))
+    const namespaces = readdirSync(languagePath, { withFileTypes: true })
+      .filter((dirent) => dirent.isFile() && !/_old\.json/.test(dirent.name) && dirent.name.endsWith('.json'))
       .map((dirent) => dirent.name.replace('.json', ''));
 
-    for (const fileIndex in files) {
-      callback(languages[languageIndex], files[fileIndex]);
+    for (const fileIndex in namespaces) {
+      callback(languages[languageIndex], namespaces[fileIndex]);
     }
   }
 }
